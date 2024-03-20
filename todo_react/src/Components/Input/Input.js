@@ -1,11 +1,6 @@
 import { useState } from "react";
-import { useEffect } from "react";
 
-const Input = () => {
-  const [tasks, setTasks] = useState(
-    localStorage.getItem("task") ? JSON.parse(localStorage.getItem("task")) : []
-  );
-
+const Input = ({ tasks, setTasks }) => {
   const [value, setValue] = useState("");
 
   const changeValue = (event) => {
@@ -14,17 +9,20 @@ const Input = () => {
 
   const handleGetInputValue = (e) => {
     e.preventDefault();
-    setTasks([
-      ...tasks,
-      { task: value, isCompleted: false, time: new Date().toLocaleString() },
-    ]);
-    localStorage.setItem("task", JSON.stringify(tasks));
-    setValue("");
+    if (tasks.every((item) => !(item.task === value))) {
+       setTasks([
+        ...tasks,
+        {
+          task: value,
+          isCompleted: false,
+          time: new Date().toLocaleString(),
+          key: value,
+        },
+      ]);
+      localStorage.setItem("task", JSON.stringify(tasks));
+      setValue("");
+    }
   };
-
-  useEffect(() => {
-    localStorage.setItem("task", JSON.stringify(tasks));
-  }, [tasks]);
 
   return (
     <div className="todo__input">

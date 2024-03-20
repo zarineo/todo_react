@@ -1,11 +1,11 @@
 import Input from "../Input/Input";
 import Select from "../Select/Select";
 
-const Form = () => {
+const Form = ({tasks, setTasks, renderTasks, setRenderTasks, value, setValue}) => {
   return (
     <form className="todo__form">
-      <Input />
-      <Select />
+      <Input tasks = {tasks} setTasks = {setTasks}/>
+      <Select tasks = {tasks} setTasks = {setTasks} renderTasks={renderTasks} setRenderTasks={setRenderTasks} value={value} setValue={setValue} />
     </form>
   );
 };
